@@ -14,7 +14,7 @@ public enum RoleType {
     private final String role;
 
 
-    @JsonValue
+    @JsonValue // 이걸 넣어주어야 함.
     public String getRole() {
         return role;
     }

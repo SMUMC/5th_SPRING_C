@@ -1,3 +1,6 @@
+// patch는 어떻게 구현하는 지 (사실 put이 patch가 아닌지)
+// update null 구문 질문
+
 package com.example.springc.config;
 
 import org.springframework.data.annotation.CreatedDate;

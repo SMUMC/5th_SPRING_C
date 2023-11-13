@@ -47,8 +47,9 @@ public class UserServiceV2 {
 
         return new UserRes.UserJoinRes(newUser);
     }
-
-    public UserRes.UserJoinRes update(Long userId, UserReq.UserUpdateReq userUpdateReq) throws Exception {
+    
+    // patch 질문
+    public UserRes.UserJoinRes update(Long userId, UserReq.UserUpdateReq userUpdateReq) throws Exception {  
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         if (userUpdateReq.getName() != null) {
             userEntity.setName(userUpdateReq.getName());

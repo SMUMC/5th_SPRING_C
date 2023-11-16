@@ -17,8 +17,8 @@ public class UserConverter {
                 .email(userJoinReq.getEmail())
                 .password(encryptedPw)
                 .name(userJoinReq.getName())
-//                .status('A') // @ColumnDefault 이용
-                .role(RoleType.USER) // @ColumnDefault 이용
+                .status('A')
+                .role(RoleType.USER)
                 .build();
     }
     public static UserRes.UserJoinRes toUserDto(UserEntity user){

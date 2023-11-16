@@ -1,5 +1,6 @@
 package com.example.springc.dto;
 
+import com.example.springc.config.RoleType;
 import com.example.springc.entities.UserEntity;
 import lombok.*;
 
@@ -13,11 +14,13 @@ public class UserRes {
         private String email;
         private String name;
         private char status;
+        private RoleType role;
 
         public UserJoinRes(UserEntity user) {
             this.email = user.getEmail();
             this.name = user.getName();
             this.status = user.getStatus();
+            this.role = user.getRole();
         }
     }
 }

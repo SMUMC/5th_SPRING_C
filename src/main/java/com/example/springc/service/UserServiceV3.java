@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +29,7 @@ public class UserServiceV3 {
 //    static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z]+)(?=.*\\d)(?=.*[!@#$%^&*]).{8,64}$"; // 8자 이상 64자 이하, 대소문자, 특수문자 각각 한 번씩 포함
     private static final String EMAIL_PATTERN = "^.{5,254}$|^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$\n";
 
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public UserRes.UserJoinRes create(UserReq.UserJoinReq userJoinReq) throws BaseException {
         if(!userJoinReq.getEmail().matches(EMAIL_PATTERN))
@@ -37,14 +38,8 @@ public class UserServiceV3 {
 //            throw new BaseException(INVALID_PASSWORD_FORMAT);
         if(userRepository.findByEmail(userJoinReq.getEmail()).isPresent())
             throw new BaseException(POST_USERS_EXISTS_EMAIL);
-        String encryptedPw = encoder.encode(userJoinReq.getPassword());
-        UserEntity newUser = UserEntity.builder()
-                .email(userJoinReq.getEmail())
-                .password(encryptedPw)
-                .name(userJoinReq.getName())
-                .status('A')
-                .role(RoleType.USER)
-                .build();
+
+        UserEntity newUser = UserConverter.toUser(userJoinReq);
 
         // 성능적인 면에선 큰 차이 X
         // 생성자 방식: 코드가 간결, 필드가 많아지면 복잡해짐

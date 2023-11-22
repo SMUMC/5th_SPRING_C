@@ -23,6 +23,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor // 필드 아무것도 받지 않는 생성자
 @Builder
 @Data// @Getter + @Setter 인데 @Setter 안 쓰는 경우는 @Getter 만 해주는 것이 좋다 !
+@DynamicUpdate
+@DynamicInsert
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY, SEQUENCE, TABLE 가 있는데 IDENTITY 는 자동 증가 옵션

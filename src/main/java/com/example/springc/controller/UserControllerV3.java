@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -35,6 +38,19 @@ public class UserControllerV3 {
     // R
     @GetMapping("/{userId}")
     public BaseResponse<UserRes.UserJoinRes> read(@PathVariable Long userId, HttpServletRequest request) throws Exception {
+
+        log.info("========= 헤더 정보 확인 ==========");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        Map<String, String> headers = new HashMap<>();
+
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            headers.put(headerName, headerValue);
+        }
+        System.out.println("Headers received: " + headers);
+        log.info("================================");
+
         return new BaseResponse<>(userService.read(userId, request));
     }
 
